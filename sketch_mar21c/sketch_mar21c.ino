@@ -25,7 +25,7 @@
 
 //
 #define time_break 43200000
-#define sensor_warering_value 350
+#define sensor_warering_value 300
 
 SoilSensor soilSensor1;
 SoilSensor soilSensor2;
@@ -40,27 +40,34 @@ int water_motor_pins[soilSensorsSize] = {pin_water_motor1, pin_water_motor2, pin
 
 
 void setup() {
-  //power.setSleepMode(POWERDOWN_SLEEP);
-  //power.autoCalibrate(); // Р В Р’В Р вЂ™Р’В°Р В Р’В Р В РІР‚В Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚СћР В Р’В Р РЋРїС—Р…Р В Р’В Р вЂ™Р’В°Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚пїЅР В Р Р‹Р Р†Р вЂљР Р‹Р В Р’В Р вЂ™Р’ВµР В Р Р‹Р В РЎвЂњР В Р’В Р РЋРІР‚СњР В Р’В Р вЂ™Р’В°Р В Р Р‹Р В Р РЏ Р В Р’В Р РЋРІР‚СњР В Р’В Р вЂ™Р’В°Р В Р’В Р вЂ™Р’В»Р В Р’В Р РЋРІР‚пїЅР В Р’В Р вЂ™Р’В±Р В Р Р‹Р В РІР‚С™Р В Р’В Р РЋРІР‚СћР В Р’В Р В РІР‚В Р В Р’В Р РЋРІР‚СњР В Р’В Р вЂ™Р’В° Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р вЂ™Р’В°Р В Р’В Р Р†РІР‚С›РІР‚вЂњР В Р’В Р РЋРїС—Р…Р В Р’В Р вЂ™Р’ВµР В Р Р‹Р В РІР‚С™Р В Р’В Р вЂ™Р’В° Р В Р Р‹Р В РЎвЂњР В Р’В Р В РІР‚В¦Р В Р’В Р вЂ™Р’В° (Р В Р Р‹Р Р†Р вЂљР Р‹Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚СћР В Р’В Р вЂ™Р’В±Р В Р Р‹Р Р†Р вЂљРІвЂћвЂ“ Р В Р Р‹Р В РЎвЂњР В Р’В Р РЋРІР‚вЂќР В Р’В Р вЂ™Р’В°Р В Р’В Р вЂ™Р’В» Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚СћР В Р Р‹Р Р†Р вЂљР Р‹Р В Р’В Р В РІР‚В¦Р В Р’В Р РЋРІР‚СћР В Р’В Р вЂ™Р’Вµ Р В Р’В Р В РІР‚В Р В Р Р‹Р В РІР‚С™Р В Р’В Р вЂ™Р’ВµР В Р’В Р РЋРїС—Р…Р В Р Р‹Р В Р РЏ) ~2 Р В Р Р‹Р В РЎвЂњР В Р’В Р вЂ™Р’ВµР В Р’В Р РЋРІР‚Сњ
+  power.setSleepMode(POWERDOWN_SLEEP);
 
   initSoilSensors();
   initPinWaterMotors();
+
+  //Serial.begin(9600);
+  //Serial.println("Start");
 
   delay(50);
 }
 
 void loop() {
+  power.autoCalibrate(); // Р В Р’В Р вЂ™Р’В°Р В Р’В Р В РІР‚В Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚СћР В Р’В Р РЋРїС—Р…Р В Р’В Р вЂ™Р’В°Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р’В Р РЋРІР‚пїЅР В Р Р‹Р Р†Р 
 
   for (int index_soil_sensor = 0; index_soil_sensor < soilSensorsSize; index_soil_sensor++) {
     int soil = soilSensors[index_soil_sensor].readSoilValue();
 
+    //Serial.print(index_soil_sensor);
+    //Serial.print(" ");
+    //Serial.print(soil);
+    //Serial.println();
     if (soil >= sensor_warering_value) {
       int water_motor_pin = water_motor_pins[index_soil_sensor];
       turn_on_watering(water_motor_pin);
     }
-    delay(50);
   }
 
+  //delay(2000);
   power.sleepDelay(time_break); //Р В Р’В Р В Р вЂ№Р В Р’В Р РЋРІР‚вЂќР В Р’В Р РЋРІР‚пїЅР В Р’В Р РЋРїС—Р… Р В Р’В Р РЋРІР‚вЂњР В Р’В Р вЂ™Р’В»Р В Р Р‹Р РЋРІР‚СљР В Р’В Р вЂ™Р’В±Р В Р’В Р РЋРІР‚СћР В Р’В Р РЋРІР‚СњР В Р’В Р РЋРІР‚пїЅР В Р’В Р РЋРїС—Р… Р В Р Р‹Р В РЎвЂњР В Р’В Р В РІР‚В¦Р В Р’В Р РЋРІР‚СћР В Р’В Р РЋРїС—Р… time_break ms
 }
 
