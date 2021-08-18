@@ -23,7 +23,7 @@
 
 //
 #define time_break 43200000
-#define sensor_warering_value 400
+#define sensor_warering_value 680
 
 SoilSensor soilSensor1;
 SoilSensor soilSensor2;
