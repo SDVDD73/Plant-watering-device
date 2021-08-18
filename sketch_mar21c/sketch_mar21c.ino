@@ -17,7 +17,7 @@
 #define pin_water_motor5 3
 #define pin_water_motor6 2
 
-#define time_watering 6000
+#define time_watering 10000
 #define min_value_watering 235
 #define max_value_watering 400
 
