@@ -17,13 +17,13 @@
 #define pin_water_motor5 3
 #define pin_water_motor6 2
 
-#define time_watering 10000
+#define time_watering 12000
 #define min_value_watering 235
 #define max_value_watering 400
 
 //
 #define time_break 43200000
-#define sensor_warering_value 680
+#define sensor_warering_value 550
 
 SoilSensor soilSensor1;
 SoilSensor soilSensor2;
